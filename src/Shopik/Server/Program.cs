@@ -1,4 +1,5 @@
-using Microsoft.AspNetCore.ResponseCompression;
+using Entity;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,6 +7,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+builder.Services.AddDbContext<ShopikDbContext>(options =>
+{
+    options.UseSqlite($"Data Source={$"shopik.db"}");
+});
 
 var app = builder.Build();
 
@@ -23,6 +28,7 @@ else
 
 app.UseHttpsRedirection();
 
+
 app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
 
@@ -32,5 +38,14 @@ app.UseRouting();
 app.MapRazorPages();
 app.MapControllers();
 app.MapFallbackToFile("index.html");
+
+using (var scope = app.Services.CreateScope())
+{
+    if (scope == null) throw new ArgumentNullException(nameof(scope));
+
+    using var dbContext = scope.ServiceProvider.GetRequiredService<ShopikDbContext>();
+    dbContext.Database.Migrate();
+}
+
 
 app.Run();
