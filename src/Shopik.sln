@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopik.Client", "Shopik\Cli
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopik.Shared", "Shopik\Shared\Shopik.Shared.csproj", "{8EF7D994-8E05-4045-A2DB-D4BFB3834CE3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entity", "Entity\Entity.csproj", "{B03690AF-498E-4751-80D8-E27BA0545208}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entity", "Entity\Entity.csproj", "{B03690AF-498E-4751-80D8-E27BA0545208}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facades", "Facades\Facades.csproj", "{C8F4E6EF-43A1-4FEC-8E41-E354397C176F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{B03690AF-498E-4751-80D8-E27BA0545208}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B03690AF-498E-4751-80D8-E27BA0545208}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B03690AF-498E-4751-80D8-E27BA0545208}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8F4E6EF-43A1-4FEC-8E41-E354397C176F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8F4E6EF-43A1-4FEC-8E41-E354397C176F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8F4E6EF-43A1-4FEC-8E41-E354397C176F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8F4E6EF-43A1-4FEC-8E41-E354397C176F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

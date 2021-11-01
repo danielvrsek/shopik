@@ -1,15 +1,30 @@
 using Entity;
+using Facades;
 using Microsoft.EntityFrameworkCore;
+using VrsekDev.Blazor.BlazorCommunicationFoundation.Serializers.Json;
+using VrsekDev.Blazor.BlazorCommunicationFoundation.Server.ApiExplorer;
+using VrsekDev.Blazor.BlazorCommunicationFoundation.Server.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<ShopikDbContext>(options =>
 {
-    options.UseSqlite($"Data Source={$"shopik.db"}");
+    var folder = Environment.SpecialFolder.LocalApplicationData;
+    var path = Environment.GetFolderPath(folder);
+    var dbPath = $"{path}{System.IO.Path.DirectorySeparatorChar}shopik.db";
+    options.UseSqlite($"Data Source=\"{dbPath}\"");
+});
+
+builder.Services.AddSwaggerGen();
+
+builder.Services.AddBCFServer(builder =>
+{
+    builder.AddApiExplorer();
+    builder.Contracts.AddFacades();
+    builder.AddSerializer<JsonInvocationSerializer>();
 });
 
 var app = builder.Build();
@@ -17,6 +32,8 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseSwagger();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"));
     app.UseWebAssemblyDebugging();
 }
 else
@@ -28,12 +45,10 @@ else
 
 app.UseHttpsRedirection();
 
-
 app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
 
 app.UseRouting();
-
 
 app.MapRazorPages();
 app.MapControllers();
@@ -47,5 +62,9 @@ using (var scope = app.Services.CreateScope())
     dbContext.Database.Migrate();
 }
 
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapBlazorCommunicationFoundation();
+});
 
 app.Run();
