@@ -10,13 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
-builder.Services.AddDbContext<ShopikDbContext>(options =>
-{
-    var folder = Environment.SpecialFolder.LocalApplicationData;
-    var path = Environment.GetFolderPath(folder);
-    var dbPath = $"{path}{System.IO.Path.DirectorySeparatorChar}shopik.db";
-    options.UseSqlite($"Data Source=\"{dbPath}\"");
-});
+builder.Services.AddDbContext<ShopikDbContext>();
 
 builder.Services.AddSwaggerGen();
 

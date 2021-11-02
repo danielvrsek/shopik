@@ -7,8 +7,19 @@ namespace Entity
     {
         public DbSet<ShopItem> ShopItems { get; set; }
 
-        public ShopikDbContext(DbContextOptions<ShopikDbContext> options) : base(options)
+        private string dbPath;
+
+        public ShopikDbContext()
         {
+            var folder = Environment.SpecialFolder.LocalApplicationData;
+            var path = Environment.GetFolderPath(folder);
+            dbPath = $"{path}{System.IO.Path.DirectorySeparatorChar}shopik.db";
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlite($"Data Source=\"{dbPath}\"");
+
         }
     }
 }

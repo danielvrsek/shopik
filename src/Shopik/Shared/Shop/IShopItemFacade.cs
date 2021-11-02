@@ -9,5 +9,7 @@ namespace Shopik.Shared.Shop
         Task<List<ShopItemViewModel>> GetAllAsync();
 
         Task<ShopItemViewModel> GetByIdAsync(int id);
+
+        Task<ShopItemViewModel> UpdateAsync(int id, ShopItemEditModel editModel);
     }
 }

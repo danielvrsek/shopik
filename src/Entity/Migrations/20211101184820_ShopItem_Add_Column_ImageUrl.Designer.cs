@@ -2,14 +2,16 @@
 using Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Entity.Migrations
 {
     [DbContext(typeof(ShopikDbContext))]
-    partial class ShopikContextModelSnapshot : ModelSnapshot
+    [Migration("20211101184820_ShopItem_Add_Column_ImageUrl")]
+    partial class ShopItem_Add_Column_ImageUrl
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

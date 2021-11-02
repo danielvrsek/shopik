@@ -1,7 +1,7 @@
 ﻿namespace Shopik.Shared.Shop.Dto
 {
-    public class ShopItemCreateModel
+    public class ShopItemCreateModel : ShopItemEditModel
     {
-        public string Name { get; set; }
+
     }
 }

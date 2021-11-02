@@ -9,6 +9,10 @@ namespace Entity.Shop
 
         [Required]
         [MaxLength(200)]
-        public string? Name { get; set; }
+        public string? DisplayName { get; set; }
+
+        [Required]
+        [MaxLength(200)]
+        public string? ImageUrl { get; set; }
     }
 }

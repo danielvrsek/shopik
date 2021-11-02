@@ -2,8 +2,6 @@
 @using Shopik.Shared.Shop
 @using Shopik.Shared.Shop.Dto
 
-@inject HttpClient Http
-
 @inject IShopItemFacade ShopItemFacade
 
 <PageTitle>Weather forecast</PageTitle>
@@ -30,7 +28,7 @@ else
             {
                 <tr>
                     <td>@shopItem.Id</td>
-                    <td>@shopItem.Name</td>
+                    <td>@shopItem.DisplayName</td>
                 </tr>
             }
         </tbody>

@@ -19,36 +19,57 @@ namespace Facades.Shop
         {
             ShopItem shopItem = new ShopItem
             {
-                Name = createModel.Name
+                DisplayName = createModel.DisplayName,
+                ImageUrl = createModel.ImageUrl
             };
 
             _dbContext.ShopItems.Add(shopItem);
 
             await _dbContext.SaveChangesAsync();
 
-            return new ShopItemViewModel
-            {
-                Id = shopItem.Id,
-                Name = shopItem.Name
-            };
+            return MapToViewModel(shopItem);
         }
 
         public Task<List<ShopItemViewModel>> GetAllAsync()
         {
-            return _dbContext.ShopItems.Select(x => new ShopItemViewModel
-            {
-                Id = x.Id,
-                Name = x.Name
-            }).ToListAsync();
+            return GetShopItemViewModelsQueryable().ToListAsync();
         }
 
         public Task<ShopItemViewModel> GetByIdAsync(int id)
         {
+            return GetShopItemViewModelsQueryable().SingleAsync(x => x.Id == id);
+        }
+
+        public async Task<ShopItemViewModel> UpdateAsync(int id, ShopItemEditModel editModel)
+        {
+            var entity = await _dbContext.ShopItems.FindAsync(id);
+            entity.DisplayName = editModel.DisplayName;
+            entity.ImageUrl = editModel.ImageUrl;
+
+            _dbContext.Update(entity);
+            await _dbContext.SaveChangesAsync();
+
+            return MapToViewModel(entity);
+        }
+
+        ShopItemViewModel MapToViewModel(ShopItem shopItem)
+        {
+            return new ShopItemViewModel
+            {
+                Id = shopItem.Id,
+                DisplayName = shopItem.DisplayName,
+                ImageUrl = shopItem.ImageUrl
+            };
+        }
+
+        IQueryable<ShopItemViewModel> GetShopItemViewModelsQueryable()
+        {
             return _dbContext.ShopItems.Select(x => new ShopItemViewModel
             {
                 Id = x.Id,
-                Name = x.Name
-            }).SingleAsync(x => x.Id == id);
+                DisplayName = x.DisplayName,
+                ImageUrl = x.ImageUrl
+            });
         }
     }
 }
