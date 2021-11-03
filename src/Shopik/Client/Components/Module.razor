@@ -1,0 +1,20 @@
+﻿@code {
+    [Parameter]
+    public string? Title { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}
+
+<section class="module-small">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+                <h2 class="module-title font-alt">@Title</h2>
+            </div>
+        </div>
+        <div class="row">
+            @ChildContent
+        </div>
+    </div>
+</section>

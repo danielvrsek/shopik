@@ -48,17 +48,11 @@ app.MapRazorPages();
 app.MapControllers();
 app.MapFallbackToFile("index.html");
 
-using (var scope = app.Services.CreateScope())
-{
-    if (scope == null) throw new ArgumentNullException(nameof(scope));
-
-    using var dbContext = scope.ServiceProvider.GetRequiredService<ShopikDbContext>();
-    dbContext.Database.Migrate();
-}
-
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapBlazorCommunicationFoundation();
 });
+
+app.Services.Migrate();
 
 app.Run();

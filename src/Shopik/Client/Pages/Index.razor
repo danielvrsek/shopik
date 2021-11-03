@@ -6,13 +6,11 @@
 
 <PageTitle>Index</PageTitle>
 
-<h1>Mňami shopík!</h1>
-
-<ShopItemTable ShopItems=shopItems />
-
+<ShopItemCategory CategoryName="Zdravé" ShopItems=shopItems />
+<ShopItemCategory CategoryName="Slané" ShopItems=shopItems />
 
 @code {
-    private List<ShopItemViewModel> shopItems;
+    private List<ShopItemViewModel>? shopItems;
 
     protected override async Task OnInitializedAsync()
     {

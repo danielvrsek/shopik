@@ -1,0 +1,17 @@
+﻿@code {
+    [Parameter]
+    public string? DisplayName { get; set; }
+
+    [Parameter]
+    public string? ImageUrl { get; set; }
+}
+
+
+<div class="col-sm-6 col-md-3 col-lg-3">
+    <div class="shop-item">
+        <div class="shop-item-image"><img src="@ImageUrl" alt="@DisplayName"/>
+            <div class="shop-item-detail"><a class="btn btn-round btn-b"><span class="icon-basket">Add To Cart</span></a></div>
+        </div>
+        <h4 class="shop-item-title font-alt"><a href="#">@DisplayName</a></h4>£14.00
+    </div>
+</div>

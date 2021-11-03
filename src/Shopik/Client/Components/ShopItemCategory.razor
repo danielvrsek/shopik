@@ -1,0 +1,18 @@
+﻿@using Shopik.Shared.Shop.Dto
+@code {
+    [Parameter]
+    public string CategoryName { get; set; }
+
+    [Parameter]
+    public List<ShopItemViewModel>? ShopItems { get; set; }
+}
+
+<Module Title="@CategoryName">
+    <div class="row multi-columns-row">
+        @if (ShopItems != null)
+        foreach (var shopItem in ShopItems)
+        {
+            <ShopItem DisplayName=@shopItem.DisplayName ImageUrl=@shopItem.ImageUrl />
+        }
+    </div>
+</Module>
