@@ -14,5 +14,10 @@ namespace Entity.Shop
         [Required]
         [MaxLength(200)]
         public string? ImageUrl { get; set; }
+
+        public decimal Price { get; set; }
+
+        public ShopItemCategory? Category { get; set; }
+        public int CategoryId { get; set; }
     }
 }

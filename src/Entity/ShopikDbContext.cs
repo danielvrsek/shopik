@@ -1,4 +1,5 @@
-﻿using Entity.Shop;
+﻿using Entity.Seed;
+using Entity.Shop;
 using Microsoft.EntityFrameworkCore;
 
 namespace Entity
@@ -6,6 +7,7 @@ namespace Entity
     public class ShopikDbContext : DbContext
     {
         public DbSet<ShopItem> ShopItems { get; set; }
+        public DbSet<ShopItemCategory> ShopItemCategories { get; set; }
 
         private string dbPath;
 
@@ -19,7 +21,12 @@ namespace Entity
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite($"Data Source=\"{dbPath}\"");
+        }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ShopItem>().HasOne(x => x.Category).WithMany().HasForeignKey(x => x.CategoryId);
+            SeedService.Seed(modelBuilder);
         }
     }
 }

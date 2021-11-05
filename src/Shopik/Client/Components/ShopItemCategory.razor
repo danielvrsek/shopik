@@ -1,10 +1,10 @@
 ﻿@using Shopik.Shared.Shop.Dto
 @code {
     [Parameter]
-    public string CategoryName { get; set; }
+    public string? CategoryName { get; set; }
 
     [Parameter]
-    public List<ShopItemViewModel>? ShopItems { get; set; }
+    public IEnumerable<ShopItemViewModel>? ShopItems { get; set; }
 }
 
 <Module Title="@CategoryName">
@@ -12,7 +12,7 @@
         @if (ShopItems != null)
         foreach (var shopItem in ShopItems)
         {
-            <ShopItem DisplayName=@shopItem.DisplayName ImageUrl=@shopItem.ImageUrl />
+            <ShopItem DisplayName=@shopItem.DisplayName ImageUrl=@shopItem.ImageUrl Price=@shopItem.Price />
         }
     </div>
 </Module>

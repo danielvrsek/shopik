@@ -5,15 +5,17 @@
 @inject IShopItemFacade ShopItemFacade
 
 <PageTitle>Index</PageTitle>
-
-<ShopItemCategory CategoryName="Zdravé" ShopItems=shopItems />
-<ShopItemCategory CategoryName="Slané" ShopItems=shopItems />
+@if (shopItemsGrouped != null)
+foreach (var shopItems in shopItemsGrouped)
+{
+    <ShopItemCategory CategoryName="@shopItems.Key" ShopItems=shopItems />
+}
 
 @code {
-    private List<ShopItemViewModel>? shopItems;
+    private IEnumerable<IGrouping<string?, ShopItemViewModel>>? shopItemsGrouped;
 
     protected override async Task OnInitializedAsync()
     {
-        shopItems = await ShopItemFacade.GetAllAsync();
+        shopItemsGrouped = (await ShopItemFacade.GetAllAsync()).GroupBy(x => x.CategoryDisplayName);
     }
 }

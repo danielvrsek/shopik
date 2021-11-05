@@ -4,6 +4,9 @@
 
     [Parameter]
     public string? ImageUrl { get; set; }
+
+    [Parameter]
+    public decimal Price { get; set; }
 }
 
 
@@ -12,6 +15,6 @@
         <div class="shop-item-image"><img src="@ImageUrl" alt="@DisplayName"/>
             <div class="shop-item-detail"><a class="btn btn-round btn-b"><span class="icon-basket">Add To Cart</span></a></div>
         </div>
-        <h4 class="shop-item-title font-alt"><a href="#">@DisplayName</a></h4>£14.00
+        <h4 class="shop-item-title font-alt"><a href="#">@DisplayName</a></h4>@Price
     </div>
 </div>

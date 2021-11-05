@@ -2,14 +2,16 @@
 using Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Entity.Migrations
 {
     [DbContext(typeof(ShopikDbContext))]
-    partial class ShopikContextModelSnapshot : ModelSnapshot
+    [Migration("20211105134500_Add_Seed_Init")]
+    partial class Add_Seed_Init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,8 +50,8 @@ namespace Entity.Migrations
                         {
                             Id = -1,
                             CategoryId = -1,
-                            DisplayName = "Club-Mate",
-                            ImageUrl = "images/club-mate.jpg",
+                            DisplayName = "Coca-Cola",
+                            ImageUrl = "",
                             Price = 17m
                         },
                         new
@@ -57,7 +59,7 @@ namespace Entity.Migrations
                             Id = -2,
                             CategoryId = -2,
                             DisplayName = "Pilsner Urquell",
-                            ImageUrl = "images/PilsnerUrquell.jpg",
+                            ImageUrl = "",
                             Price = 32m
                         },
                         new
