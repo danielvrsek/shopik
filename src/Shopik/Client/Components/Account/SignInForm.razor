@@ -1,0 +1,40 @@
+﻿@using Shopik.Shared.Account
+@inject IAccountService AccountService
+@inject NavigationManager NavigationManager
+
+<div class="col-sm-5 col-sm-offset-1 mb-sm-40">
+    <h4 class="font-alt">Login</h4>
+    <hr class="divider-w mb-10" />
+    <form class="form" @onclick:preventDefault="true">
+        <div class="form-group">
+            <input class="form-control" id="username" type="text" name="username" placeholder="Username" @bind=username>
+        </div>
+        <div class="form-group">
+            <input class="form-control" id="password" type="password" name="password" placeholder="Password" @bind=password>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-round btn-b" @onclick=HandleLoginAsync>Login</button>
+        </div>
+        <div class="form-group">
+            <a href="">Forgot Password?</a>
+        </div>
+    </form>
+</div>
+
+@code {
+    string username = "", password = "";
+
+    async Task HandleLoginAsync()
+    {
+        bool result = await AccountService.LoginAsync(new LoginFormDto
+        {
+            Username = username,
+            Password = password
+        });
+
+        if (result)
+        {
+            NavigationManager.NavigateTo("/");
+        }
+    }
+}

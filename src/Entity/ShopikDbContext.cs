@@ -1,10 +1,12 @@
-﻿using Entity.Seed;
+﻿using Entity.Security;
+using Entity.Seed;
 using Entity.Shop;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Entity
 {
-    public class ShopikDbContext : DbContext
+    public class ShopikDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<ShopItem> ShopItems { get; set; }
         public DbSet<ShopItemCategory> ShopItemCategories { get; set; }
@@ -25,6 +27,7 @@ namespace Entity
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<ShopItem>().HasOne(x => x.Category).WithMany().HasForeignKey(x => x.CategoryId);
             SeedService.Seed(modelBuilder);
         }

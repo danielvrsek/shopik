@@ -1,6 +1,9 @@
 using Entity;
 using Facades;
 using Microsoft.EntityFrameworkCore;
+using Shopik.Server.Configurations;
+using Shopik.Server.Services;
+using Shopik.Shared.Account;
 using VrsekDev.Blazor.BlazorCommunicationFoundation.Serializers.Json;
 using VrsekDev.Blazor.BlazorCommunicationFoundation.Server.ApiExplorer;
 using VrsekDev.Blazor.BlazorCommunicationFoundation.Server.DependencyInjection;
@@ -18,8 +21,12 @@ builder.Services.AddBCFServer(builder =>
 {
     builder.AddApiExplorer();
     builder.Contracts.AddFacades();
+    builder.Contracts.AddScoped<IAccountService, AccountService>();
     builder.AddSerializer<JsonInvocationSerializer>();
 });
+
+builder.Services.AddCustomAuthentication();
+builder.Services.AddCustomAuthorization();
 
 var app = builder.Build();
 

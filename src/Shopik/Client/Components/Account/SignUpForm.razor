@@ -1,0 +1,44 @@
+﻿@using Shopik.Shared.Account
+@inject IAccountService AccountService
+@inject NavigationManager NavigationManager
+
+<div class="col-sm-5">
+    <h4 class="font-alt">Register</h4>
+    <hr class="divider-w mb-10" />
+    <form class="form" @onclick:preventDefault="true">
+        <div class="form-group">
+            <input class="form-control" id="E-mail" type="text" name="email" placeholder="Email" @bind=email>
+        </div>
+        <div class="form-group">
+            <input class="form-control" id="password" type="password" name="password" placeholder="Password" @bind=password>
+        </div>
+        <div class="form-group">
+            <input class="form-control" id="re-password" type="password" name="re-password" placeholder="Re-enter Password" @bind=repassword>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-block btn-round btn-b" @onclick=HandleRegisterAsync>Register</button>
+        </div>
+    </form>
+</div>
+
+
+@code {
+    string email = "", password = "", repassword = "";
+
+
+    async Task HandleRegisterAsync()
+    {
+        if (String.IsNullOrEmpty(password) || password != repassword)
+        {
+            throw new Exception();
+        }
+
+        await AccountService.RegisterAsync(new RegisterFormDto
+        {
+            Email = email,
+            Password = password
+        });
+
+        NavigationManager.NavigateTo("/");
+    }
+}

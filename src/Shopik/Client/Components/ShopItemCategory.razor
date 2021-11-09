@@ -1,4 +1,5 @@
 ﻿@using Shopik.Shared.Shop.Dto
+@using static Shopik.Client.Components.Module
 @code {
     [Parameter]
     public string? CategoryName { get; set; }
@@ -7,7 +8,7 @@
     public IEnumerable<ShopItemViewModel>? ShopItems { get; set; }
 }
 
-<Module Title="@CategoryName">
+<Module Title="@CategoryName" Type=ModuleType.Small>
     <div class="row multi-columns-row">
         @if (ShopItems != null)
         foreach (var shopItem in ShopItems)

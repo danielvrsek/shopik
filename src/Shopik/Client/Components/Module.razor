@@ -3,10 +3,13 @@
     public string? Title { get; set; }
 
     [Parameter]
+    public ModuleType Type { get; set; }
+
+    [Parameter]
     public RenderFragment? ChildContent { get; set; }
 }
 
-<section class="module-small">
+<section class="module@(GetModuleTypeClassSuffix())">
     <div class="container">
         <div class="row">
             <div class="col-sm-6 col-sm-offset-3">
@@ -18,3 +21,18 @@
         </div>
     </div>
 </section>
+
+@code {
+    string GetModuleTypeClassSuffix() => Type switch
+    {
+        ModuleType.Default => "",
+        ModuleType.Small => "-small",
+        _ => ""
+    };
+
+    public enum ModuleType
+    {
+        Default,
+        Small
+    }
+}

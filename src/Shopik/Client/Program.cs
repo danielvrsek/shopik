@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Shopik.Client;
+using Shopik.Shared.Account;
 using Shopik.Shared.Shop;
 using VrsekDev.Blazor.BlazorCommunicationFoundation.Client.DependencyInjection;
 using VrsekDev.Blazor.BlazorCommunicationFoundation.Serializers.Json;
@@ -14,6 +15,7 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 builder.Services.AddBCFClient(builder =>
 {
     builder.Contracts.AddContract<IShopItemFacade>();
+    builder.Contracts.AddContract<IAccountService>();
     builder.UseSerializer<JsonInvocationSerializer>();
 });
 
