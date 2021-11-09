@@ -20,7 +20,7 @@ namespace Shopik.Server.Services
 
         public async Task RegisterAsync(RegisterFormDto registerForm)
         {
-            ApplicationUser user = new ApplicationUser
+            ApplicationUser user = new()
             {
                 UserName = registerForm.Email,
                 Email = registerForm.Email,
@@ -28,12 +28,17 @@ namespace Shopik.Server.Services
 
             IdentityResult result = await userManager.CreateAsync(user, registerForm.Password);
             CheckIdentityResult("Failed to create user with errors: ", result);
+
+            var canSignIn = await signInManager.CanSignInAsync(user);
+            if (canSignIn)
+            {
+                await signInManager.SignInAsync(user, true);
+            }
         }
 
         public async Task<bool> LoginAsync(LoginFormDto loginForm)
         {
             var result = await signInManager.PasswordSignInAsync(loginForm.Username, loginForm.Password, loginForm.RememberMe, true);
-
             if (result.Succeeded)
             {
                 return true;

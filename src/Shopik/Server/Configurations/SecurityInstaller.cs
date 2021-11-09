@@ -1,24 +1,27 @@
 ﻿using Entity;
 using Entity.Security;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
 using Shopik.Shared.Security;
+using System.Text;
 
 namespace Shopik.Server.Configurations
 {
     public static class SecurityInstaller
     {
-        public static void AddCustomAuthentication(this IServiceCollection services)
+        public static void AddCustomAuthentication(this WebApplicationBuilder builder)
         {
-            services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<ShopikDbContext>();
 
-            services.ConfigureIdentityOptions();
-            services.AddCookieAuthentication();
+            ConfigureIdentityOptions(builder.Services);
+            AddJwtAuthentication(builder.Services, builder.Configuration);
         }
 
-        public static void AddCustomAuthorization(this IServiceCollection services)
+        public static void AddCustomAuthorization(this WebApplicationBuilder builder)
         {
-            services.AddAuthorization(x =>
+            builder.Services.AddAuthorization(x =>
             {
                 x.AddPolicy(SecurityPolicy.User, policy => policy.RequireAuthenticatedUser());
                 x.AddPolicy(SecurityPolicy.Administrator, policy => policy.RequireRole(UserRoles.Administrator));
@@ -48,13 +51,21 @@ namespace Shopik.Server.Configurations
             });
         }
 
-        public static void AddCookieAuthentication(this IServiceCollection services)
+        public static void AddJwtAuthentication(this IServiceCollection services, ConfigurationManager configurationManager)
         {
-            services.AddAuthentication("CookieAuthentication")
-                .AddCookie("CookieAuthentication", config =>
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
                 {
-                    config.Cookie.Name = "UserLoginCookie";
-                    config.LoginPath = "/login";
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = configurationManager["Jwt:Issuer"],
+                        ValidAudience = configurationManager["Jwt:Issuer"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configurationManager["Jwt:Key"]))
+                    };
                 });
         }
     }

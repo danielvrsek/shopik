@@ -25,7 +25,7 @@ builder.Services.AddBCFServer(builder =>
     builder.AddSerializer<JsonInvocationSerializer>();
 });
 
-builder.Services.AddCustomAuthentication();
+builder.AddCustomAuthentication();
 builder.Services.AddCustomAuthorization();
 
 var app = builder.Build();
